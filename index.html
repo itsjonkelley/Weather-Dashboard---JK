@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- bootstrap css and script src  -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- personal css sheet  -->
+    <link rel="stylesheet" href="style.css">
+    
+
+</head>
+
+<body>
+    <header>
+        <h1>Weather Dashboard</h1>
+    </header>
+    <div class="container">
+        <div class="row">
+            <div class="col-3">
+                <!-- seach section -->
+                <h5>Search for a city:</h5>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                    </div>
+                    <!-- search input section -->
+                    <input type="text" id="city-input" class="form-control" aria-label="Sizing example input"
+                        aria-describedby="inputGroup-sizing-default" placeholder="ex: Atlanta">  
+                    <!-- seach button click -->
+                    <input class="btn btn-primary" id="find-city" type="button" value="Search">
+                </div>
+                <!-- search history of previous cities inputed -->
+                <div class="list-group" id="list-tab" role="tablist">
+                    <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list"
+                        href="#list-home" role="tab" aria-controls="home">City 1</a>
+                    <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list"
+                        href="#list-profile" role="tab" aria-controls="profile">City 2</a>
+                    <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list"
+                        href="#list-messages" role="tab" aria-controls="messages">City 3</a>
+                    <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list"
+                        href="#list-settings" role="tab" aria-controls="settings">City 4</a>
+                    <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list"
+                        href="#list-profile" role="tab" aria-controls="profile">City 5</a>
+                    <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list"
+                        href="#list-messages" role="tab" aria-controls="messages">City 6</a>
+                    <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list"
+                        href="#list-settings" role="tab" aria-controls="settings">City 7</a>
+                </div>
+
+            </div>
+            <div class="col-9">
+                <container>
+                    <!-- Output from JSON function -->
+                    <div class="city"></div>
+                    <div class="currentDay"></div>
+                    <div class="weatherIcon"></div>
+                    <div class="temp"></div>
+                    <div class="humidity"></div>
+                    <div class="wind"></div>
+                    <div class="uvIndex"></div>
+                </container>
+                <container>
+
+                </container>
+            </div>
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                // This .on("click") function will trigger the AJAX Call
+                $("#find-city").on("click", function (event) {
+
+                    // event.preventDefault() can be used to prevent an event's default behavior.
+                    // Here, it prevents the submit button from trying to submit a form when clicked
+                    event.preventDefault();
+
+                    // Here we grab the text from the input box
+                    var cityName = $("#city-input").val();
+                    var stateName = $("#state-input").val();
+
+                    // Here we construct our URL
+                    var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q="+cityName+","+stateName+"&appid=7d5b8bfa6cf34723bc885e549d3a2702";
+
+                    // Write code between the dashes below to hit the queryURL with $ajax, then take the response data
+                    // and display it in the div with an id of movie-view
+
+                    // ------YOUR CODE GOES IN THESE DASHES. DO NOT MANUALLY EDIT THE HTML ABOVE.
+
+                    $.ajax({
+                        url: queryURL,
+                        method: "GET"
+                    })
+                        .then(function(response) {
+                            console.log(queryURL);
+                            console.log(response);
+
+                            // Transfer content to HTML
+                            $(".city").html("<h1>" + response.name + " Weather Details</h1>");
+                            $(".humidity").text("Humidity: " + response.main.humidity);
+                            $(".wind").text("Wind Speed: " + response.wind.speed);
+
+                            // Convert the temp to fahrenheit
+                            var tempF = (response.main.temp - 273.15) * 1.80 + 32;
+
+                            // add temp content to html
+                            $(".temp").text("Temperature (K) " + response.main.temp);
+                            $(".tempF").text("Temperature (F) " + tempF.toFixed(2));
+
+                        });
+                });   
+            });
+        </script>
+
+
+</body>
+
+</html>
