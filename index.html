@@ -19,7 +19,8 @@
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <!-- personal css sheet  -->
     <link rel="stylesheet" href="style.css">
-    
+
+
 
 </head>
 
@@ -36,8 +37,14 @@
                     <div class="input-group-prepend">
                     </div>
                     <!-- search input section -->
-                    <input type="text" id="city-input" class="form-control" aria-label="Sizing example input"
-                        aria-describedby="inputGroup-sizing-default" placeholder="ex: Atlanta">  
+                    <div>
+                        <input type="text" id="city-input" class="form-control" aria-label="Sizing example input"
+                            aria-describedby="inputGroup-sizing-default" placeholder="ex: Atlanta">
+                    </div>
+                    <div>
+                        <input type="text" id="city-state" class="form-control" aria-label="Sizing example input"
+                            aria-describedby="inputGroup-sizing-default" placeholder="ex: GA">
+                    </div>
                     <!-- seach button click -->
                     <input class="btn btn-primary" id="find-city" type="button" value="Search">
                 </div>
@@ -61,66 +68,94 @@
 
             </div>
             <div class="col-9">
-                <container>
+                <container id="currentContainer">
                     <!-- Output from JSON function -->
-                    <div class="city"></div>
-                    <div class="currentDay"></div>
-                    <div class="weatherIcon"></div>
+                    <div>
+                        <div class="city"></div>
+                        <div class="currentDay"></div>
+                        <div class="weatherIcon"></div>
+                    </div>
+                    <br>
                     <div class="temp"></div>
+                    <br>
                     <div class="humidity"></div>
+                    <br>
                     <div class="wind"></div>
+                    <br>
                     <div class="uvIndex"></div>
+                    <div class="longitude"></div>
+                    <div class="latitude"></div>
                 </container>
-                <container>
+                <container id="forecastContainer">
 
                 </container>
             </div>
         </div>
 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script type="text/javascript">
+            //variable for current date
+            var currentDate = moment().format('MMMM Do YYYY');
+            
             $(document).ready(function () {
                 // This .on("click") function will trigger the AJAX Call
                 $("#find-city").on("click", function (event) {
 
-                    // event.preventDefault() can be used to prevent an event's default behavior.
-                    // Here, it prevents the submit button from trying to submit a form when clicked
                     event.preventDefault();
 
                     // Here we grab the text from the input box
                     var cityName = $("#city-input").val();
                     var stateName = $("#state-input").val();
 
-                    // Here we construct our URL
-                    var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q="+cityName+","+stateName+"&appid=7d5b8bfa6cf34723bc885e549d3a2702";
+                    // variables to support UAV and forecast
+                    var long = $(".longitude");
+                    var lat = $(".latitude");
 
-                    // Write code between the dashes below to hit the queryURL with $ajax, then take the response data
-                    // and display it in the div with an id of movie-view
+
+
+                    // Here we construct our URL
+                    var queryURLCurrent = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "," + stateName + "&appid=7d5b8bfa6cf34723bc885e549d3a2702&units=imperial";
+                    var queryURLUV = "http://api.openweathermap.org/data/2.5/uvi?appid=7d5b8bfa6cf34723bc885e549d3a2702&lat=" + lat + "&lon=" + long + "";
+
 
                     // ------YOUR CODE GOES IN THESE DASHES. DO NOT MANUALLY EDIT THE HTML ABOVE.
 
                     $.ajax({
-                        url: queryURL,
+                        url: queryURLCurrent,
                         method: "GET"
                     })
-                        .then(function(response) {
-                            console.log(queryURL);
+                        .then(function (response) {
+                            console.log(queryURLCurrent);
                             console.log(response);
 
                             // Transfer content to HTML
-                            $(".city").html("<h1>" + response.name + " Weather Details</h1>");
-                            $(".humidity").text("Humidity: " + response.main.humidity);
-                            $(".wind").text("Wind Speed: " + response.wind.speed);
+                            $(".city").html("<h1>" + response.name + "</h1>"+"<h3> (" + currentDate + ") </h3");
+                            $(".temp").text("Temperature: " + response.main.temp + ' degrees Fahrenheit')
+                            $(".humidity").text("Humidity: " + response.main.humidity + "%");
+                            $(".wind").text("Wind Speed: " + response.wind.speed + " MPH");
 
-                            // Convert the temp to fahrenheit
-                            var tempF = (response.main.temp - 273.15) * 1.80 + 32;
-
-                            // add temp content to html
-                            $(".temp").text("Temperature (K) " + response.main.temp);
-                            $(".tempF").text("Temperature (F) " + tempF.toFixed(2));
+                            $(".longitude") = response.coord.lon;
+                            $(".latitude") = response.coord.lat;
 
                         });
-                });   
+
+
+                    $.ajax({
+                        url: queryURLUV,
+                        method: "GET"
+                    })
+                        .then(function (response) {
+                            console.log(queryURLUV);
+                            console.log(response);
+
+
+                            // Transfer content to HTML
+                            $(".uvIndex").text("UV Index: " + response.value);
+
+
+                        });
+                });
             });
         </script>
 
