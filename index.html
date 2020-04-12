@@ -41,39 +41,41 @@
                         <input type="text" id="city-input" class="form-control" aria-label="Sizing example input"
                             aria-describedby="inputGroup-sizing-default" placeholder="ex: Atlanta">
                     </div>
-                    <div>
+                    <!-- <div>
                         <input type="text" id="city-state" class="form-control" aria-label="Sizing example input"
                             aria-describedby="inputGroup-sizing-default" placeholder="ex: GA">
-                    </div>
+                    </div> -->
                     <!-- seach button click -->
                     <input class="btn btn-primary" id="find-city" type="button" value="Search">
                 </div>
                 <!-- search history of previous cities inputed -->
+
+                <!-- this.text  on click  -->
                 <div class="list-group" id="list-tab" role="tablist">
                     <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list"
-                        href="#list-home" role="tab" aria-controls="home">City 1</a>
+                        href="#list-home" role="tab" aria-controls="home">Los Angeles</a>
                     <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list"
-                        href="#list-profile" role="tab" aria-controls="profile">City 2</a>
+                        href="#list-profile" role="tab" aria-controls="profile">Chicago</a>
                     <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list"
-                        href="#list-messages" role="tab" aria-controls="messages">City 3</a>
+                        href="#list-messages" role="tab" aria-controls="messages">Miami</a>
                     <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list"
-                        href="#list-settings" role="tab" aria-controls="settings">City 4</a>
+                        href="#list-settings" role="tab" aria-controls="settings">New York</a>
                     <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list"
-                        href="#list-profile" role="tab" aria-controls="profile">City 5</a>
+                        href="#list-profile" role="tab" aria-controls="profile">Austin</a>
                     <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list"
-                        href="#list-messages" role="tab" aria-controls="messages">City 6</a>
+                        href="#list-messages" role="tab" aria-controls="messages">San Francisco</a>
                     <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list"
-                        href="#list-settings" role="tab" aria-controls="settings">City 7</a>
+                        href="#list-settings" role="tab" aria-controls="settings">Seattle</a>
                 </div>
 
             </div>
             <div class="col-9">
-                <container id="currentContainer">
+                <div class="container" id="currentContainer">
                     <!-- Output from JSON function -->
                     <div>
                         <div class="city"></div>
                         <div class="currentDay"></div>
-                        <div class="weatherIcon"></div>
+                        <div id="weatherIcon"></div>
                     </div>
                     <br>
                     <div class="temp"></div>
@@ -82,22 +84,97 @@
                     <br>
                     <div class="wind"></div>
                     <br>
-                    <div class="uvIndex"></div>
-                    <div class="longitude"></div>
-                    <div class="latitude"></div>
-                </container>
-                <container id="forecastContainer">
-
-                </container>
+                    <div class="uvIndex uvchange"></div>
+                </div>
+                <!-- output for the 5 day forecast -->
+                <h2>Five day forecast:</h2>
+                <div class="container" id="forecastContainer">
+                    <div class="row row-cols-1 row-cols-md-5">
+                        <div class="col mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title" id="day1"></h5>
+                                    <p class="card-text">
+                                        <p id="foreIcon0"></p>
+                                        <p class="tempFore0"></p>
+                                        <p class="humidityFore0"></p>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title" id="day2"></h5>
+                                    <p class="card-text">
+                                        <p id="foreIcon1"></p>
+                                        <p class="tempFore1"></p>
+                                        <p class="humidityFore1"></p>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title" id="day3"></h5>
+                                    <p class="card-text">
+                                        <p id="foreIcon2"></p>
+                                        <p class="tempFore2"></p>
+                                        <p class="humidityFore2"></p>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title" id="day4"></h5>
+                                    <p class="card-text">
+                                        <p id="foreIcon3"></p>
+                                        <p class="tempFore3"></p>
+                                        <p class="humidityFore3"></p>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title" id="day5"></h5>
+                                    <p class="card-text">
+                                        <p id="foreIcon4"></p>
+                                        <p class="tempFore4"></p>
+                                        <p class="humidityFore4"></p>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script type="text/javascript">
+
             //variable for current date
             var currentDate = moment().format('MMMM Do YYYY');
-            
+            var long;
+            var lat;
+
+            //variable for icons
+
+            // var iconLocation = this.weather[0].icon
+            // var iconCode = "http://openweathermap.org/img/w/" + iconLocation + ".png";
+            // $('#weatherIcon').attr('src', iconLocation);
+
+
+
+
+
+
             $(document).ready(function () {
                 // This .on("click") function will trigger the AJAX Call
                 $("#find-city").on("click", function (event) {
@@ -106,57 +183,185 @@
 
                     // Here we grab the text from the input box
                     var cityName = $("#city-input").val();
-                    var stateName = $("#state-input").val();
-
+                    // var stateName = $("#state-input").val();
+                    
                     // variables to support UAV and forecast
-                    var long = $(".longitude");
-                    var lat = $(".latitude");
-
-
-
-                    // Here we construct our URL
-                    var queryURLCurrent = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "," + stateName + "&appid=7d5b8bfa6cf34723bc885e549d3a2702&units=imperial";
-                    var queryURLUV = "http://api.openweathermap.org/data/2.5/uvi?appid=7d5b8bfa6cf34723bc885e549d3a2702&lat=" + lat + "&lon=" + long + "";
-
-
-                    // ------YOUR CODE GOES IN THESE DASHES. DO NOT MANUALLY EDIT THE HTML ABOVE.
-
+                    
+                    
+                    
+                    // URL query list:
+                    //current temperature
+                    var queryURLCurrent = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=7d5b8bfa6cf34723bc885e549d3a2702&units=imperial";
+                    
+                    
+                    
+                    
+                    //Current section URL work
+                    
                     $.ajax({
                         url: queryURLCurrent,
                         method: "GET"
                     })
+                    .then(function (response) {
+                        console.log(queryURLCurrent);
+                        console.log(response);
+                        
+                        // Transfer content to HTML
+                        $(".city").html("<h1>" + response.name + " (" + currentDate + ") </h1>");
+                        $(".temp").text("Temp: " + response.main.temp + 'ºF')
+                        $(".humidity").text("Humidity: " + response.main.humidity + "%");
+                        $(".wind").text("Wind Speed: " + response.wind.speed + " MPH");
+                        
+                        
+                        //icon pull
+                        iconCode = response.weather[0].icon;
+                        console.log(iconCode);
+                        var iconPull = "http://openweathermap.org/img/w/" + iconCode + ".png";
+                        $("#weatherIcon").html("<img src='" + iconPull + "'>");
+                        
+                        // $(".longitude") = response.coord.lon;
+                        // $(".latitude") = response.coord.lat;
+                        long = response.coord.lon;
+                        lat = response.coord.lat;
+                        console.log(long);
+                        console.log(lat);
+                        
+                        var queryURLUV = "https://api.openweathermap.org/data/2.5/uvi?appid=7d5b8bfa6cf34723bc885e549d3a2702&lat=" + lat + "&lon=" + long + "";
+                        
+                        $.ajax({
+                            url: queryURLUV,
+                            method: "GET"
+                        })
                         .then(function (response) {
-                            console.log(queryURLCurrent);
+                            console.log("queryURLUV: ", queryURLUV);
                             console.log(response);
-
+                            
+                            var outputValue = response.value
+                            console.log(outputValue);
+                            
                             // Transfer content to HTML
-                            $(".city").html("<h1>" + response.name + "</h1>"+"<h3> (" + currentDate + ") </h3");
-                            $(".temp").text("Temperature: " + response.main.temp + ' degrees Fahrenheit')
-                            $(".humidity").text("Humidity: " + response.main.humidity + "%");
-                            $(".wind").text("Wind Speed: " + response.wind.speed + " MPH");
+                            $(".uvIndex").text("UV Index: " + outputValue);
+                            
+                            
+                            // uv ray reading
+        
+                            var elementToCheck = (".uvchange");
+        
+                            if (outputValue < 3) {
+                                elementToCheck.addClass(".low");
+                            } else if (outputValue > 7) {
+                                elementToCheck.addClass(".high");
+                            } else {
+                                elementToCheck.addClass(".moderate");
+                            };
+                            
+                            
+                            
 
-                            $(".longitude") = response.coord.lon;
-                            $(".latitude") = response.coord.lat;
+                                });
+                        }
 
-                        });
+                        );
 
+                    //forecast temperature
+                    var queryURLForecast = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=7d5b8bfa6cf34723bc885e549d3a2702&units=imperial";
+
+                    // query UV level pull 
+
+                    // forecast url pull
 
                     $.ajax({
-                        url: queryURLUV,
+                        url: queryURLForecast,
                         method: "GET"
                     })
                         .then(function (response) {
-                            console.log(queryURLUV);
+                            console.log(queryURLForecast);
                             console.log(response);
 
+                            // Transfer content to HTML for temp and humidity
+                            $(".tempFore0").text("Temp: " + response.list[0].main.temp_max + 'ºF')
+                            $(".humidityFore0").text("Humidity: " + response.list[0].main.humidity + "%");
+                            $(".tempFore1").text("Temp: " + response.list[1].main.temp_max + 'ºF')
+                            $(".humidityFore1").text("Humidity: " + response.list[1].main.humidity + "%");
+                            $(".tempFore2").text("Temp: " + response.list[2].main.temp_max + 'ºF')
+                            $(".humidityFore2").text("Humidity: " + response.list[2].main.humidity + "%");
+                            $(".tempFore3").text("Temp: " + response.list[3].main.temp_max + 'ºF')
+                            $(".humidityFore3").text("Humidity: " + response.list[3].main.humidity + "%");
+                            $(".tempFore4").text("Temp: " + response.list[4].main.temp_max + 'ºF')
+                            $(".humidityFore4").text("Humidity: " + response.list[4].main.humidity + "%");
 
-                            // Transfer content to HTML
-                            $(".uvIndex").text("UV Index: " + response.value);
+
+                            iconForeCode0 = response.list[0].weather[0].icon;
+                            console.log(iconForeCode0);
+                            var iconForePull0 = "http://openweathermap.org/img/w/" + iconForeCode0 + ".png";
+                            $("#foreIcon0").html("<img src='" + iconForePull0 + "'>");
+
+                            iconForeCode1 = response.list[1].weather[0].icon;
+                            var iconForePull1 = "http://openweathermap.org/img/w/" + iconForeCode1 + ".png";
+                            $("#foreIcon1").html("<img src='" + iconForePull1 + "'>");
+
+                            iconForeCode2 = response.list[2].weather[0].icon;
+                            var iconForePull2 = "http://openweathermap.org/img/w/" + iconForeCode2 + ".png";
+                            $("#foreIcon2").html("<img src='" + iconForePull2 + "'>");
+
+                            iconForeCode3 = response.list[3].weather[0].icon;
+                            var iconForePull3 = "http://openweathermap.org/img/w/" + iconForeCode3 + ".png";
+                            $("#foreIcon3").html("<img src='" + iconForePull3 + "'>");
+
+                            iconForeCode4 = response.list[4].weather[0].icon;
+                            var iconForePull4 = "http://openweathermap.org/img/w/" + iconForeCode4 + ".png";
+                            $("#foreIcon4").html("<img src='" + iconForePull4 + "'>");
 
 
-                        });
+
+
+
+                        }
+
+
+                        );
+
+
                 });
             });
+
+            // 5 day forcast cards on bottom right 
+
+            //display of the dates on 5 day forecast cards
+            var day1 = moment().add(1, 'day').format('MMMM Do');
+            document.getElementById("day1").innerHTML = day1;
+
+            var day2 = moment().add(2, 'day').format('MMMM Do');
+            document.getElementById("day2").innerHTML = day2;
+
+            var day3 = moment().add(3, 'day').format('MMMM Do');
+            document.getElementById("day3").innerHTML = day3;
+
+            var day4 = moment().add(4, 'day').format('MMMM Do');
+            document.getElementById("day4").innerHTML = day4;
+
+            var day5 = moment().add(5, 'day').format('MMMM Do');
+            document.getElementById("day5").innerHTML = day5;
+
+
+            //forloop to display other items (temp, humidity and symbol)
+            // function displayDates() {
+            //     (showDate.innerHTML = date)
+            // };
+
+
+
+            // for (let i = 0; i < 5; i++) {
+            //     var temp = response.list.main.temp
+            //     var showTemp = document.querySelector(".forecastTemp" + i);
+            //     showTemp.innerHTML = temp;
+            //     displayDates(showDate);
+            //     console.log(i);
+            // };
+
+
+
+
         </script>
 
 
